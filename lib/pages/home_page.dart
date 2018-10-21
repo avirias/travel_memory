@@ -207,7 +207,7 @@ class MemoryCardState extends State<MemoryCard> {
                       child: Padding(
                         padding: EdgeInsets.only(
                             top: MediaQuery.of(context).size.width * 0.5,
-                            left: MediaQuery.of(context).size.width * 0.12,
+                            left: MediaQuery.of(context).size.width * 0.14,
                             right: 12.0),
                         child: Text(
                           widget.caption,
