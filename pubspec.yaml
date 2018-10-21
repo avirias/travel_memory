@@ -37,6 +37,8 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
+  assets:
+    -  assets/images/android-wallpaper-city-dark-248159.jpg
   # assets:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
@@ -52,6 +54,16 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
+  fonts:
+    - family: Quicksand
+      fonts:
+        - asset: assets/fonts/Quicksand-Medium.ttf
+        - asset: assets/fonts/Quicksand-Regular.ttf
+        - asset: assets/fonts/Quicksand-Bold.ttf
+        - asset: assets/fonts/Quicksand-Light.ttf
+    - family: Playfair
+      fonts:
+        - asset: assets/fonts/PlayfairDisplay-Bold.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:
