@@ -61,14 +61,14 @@ class _HomePageState extends State<HomePage> {
                 ),
                 children: <Widget>[
                   MemoryCard(
-                    isSelected: true,
-                    locationImage: "https://053e44c254414925813d3f8f1212f0b3.objectstore.eu/w3tc/wp-content/uploads/sites/15/2014/06/moderne-hippies-citroenwater-1-6.jpg?f35f10",
+                    locationImage:
+                        "https://053e44c254414925813d3f8f1212f0b3.objectstore.eu/w3tc/wp-content/uploads/sites/15/2014/06/moderne-hippies-citroenwater-1-6.jpg?f35f10",
                     locationName: "Japan",
                     caption: "An unforgettable journey with an acquaintance",
                   ),
                   MemoryCard(
-                    isSelected: false,
-                    locationImage: "https://images.pexels.com/photos/1008000/pexels-photo-1008000.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                    locationImage:
+                        "https://images.pexels.com/photos/1008000/pexels-photo-1008000.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
                     locationName: "Los Angels",
                     caption: "An unforgettable journey with an acquaintance",
                   ),
@@ -82,17 +82,27 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class MemoryCard extends StatelessWidget {
-  final bool isSelected;
+class MemoryCard extends StatefulWidget {
   final String locationImage;
   final String locationName;
   final String caption;
-  MemoryCard({
-    this.isSelected,
-    this.locationImage,
-    this.locationName,
-    this.caption
-  });
+  MemoryCard({this.locationImage, this.locationName, this.caption});
+
+  @override
+  MemoryCardState createState() {
+    return new MemoryCardState();
+  }
+}
+
+class MemoryCardState extends State<MemoryCard> {
+  bool isSelected;
+
+  @override
+  void initState() {
+    super.initState();
+    isSelected = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -108,15 +118,38 @@ class MemoryCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.0),
           ),
           image: DecorationImage(
-              image: NetworkImage(
-                locationImage
-              ),
+              image: NetworkImage(widget.locationImage),
               fit: BoxFit.cover,
               colorFilter:
                   ColorFilter.mode(Colors.grey.shade400, BlendMode.multiply)),
         ),
         child: Stack(
           children: <Widget>[
+            Positioned(
+              top: 20.0,
+              right: 20.0,
+              child: RawMaterialButton(
+                shape: CircleBorder(),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Icon(
+                    !isSelected ? Icons.expand_more : Icons.expand_less,
+                    color: Colors.white,
+                    size: 32.0,
+                  ),
+                ),
+                onPressed: () {
+                  if (!isSelected) {
+                    setState(() {
+                      isSelected = true;
+                    });
+                  } else
+                    setState(() {
+                      isSelected = false;
+                    });
+                },
+              ),
+            ),
             isSelected
                 ? Align(
                     alignment: Alignment.topCenter,
@@ -138,7 +171,7 @@ class MemoryCard extends StatelessWidget {
             Align(
               alignment: Alignment.center,
               child: Text(
-                locationName,
+                widget.locationName,
                 style: TextStyle(
                     fontFamily: "Playfair",
                     fontSize: isSelected ? 70.0 : 60.0,
@@ -156,7 +189,7 @@ class MemoryCard extends StatelessWidget {
                           left: MediaQuery.of(context).size.width * 0.12,
                           right: 12.0),
                       child: Text(
-                        caption,
+                        widget.caption,
                         textAlign: TextAlign.right,
                         maxLines: 2,
                         style: TextStyle(
