@@ -65,12 +65,14 @@ class _HomePageState extends State<HomePage> {
                         "https://053e44c254414925813d3f8f1212f0b3.objectstore.eu/w3tc/wp-content/uploads/sites/15/2014/06/moderne-hippies-citroenwater-1-6.jpg?f35f10",
                     locationName: "Japan",
                     caption: "An unforgettable journey with an acquaintance",
+                    date: "Oct 12-Nov 2, '18",
                   ),
                   MemoryCard(
                     locationImage:
                         "https://images.pexels.com/photos/1008000/pexels-photo-1008000.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
                     locationName: "Los Angels",
                     caption: "An unforgettable journey with an acquaintance",
+                    date: "Jan 9-Jan 18, '17",
                   ),
                 ],
               ),
@@ -86,7 +88,8 @@ class MemoryCard extends StatefulWidget {
   final String locationImage;
   final String locationName;
   final String caption;
-  MemoryCard({this.locationImage, this.locationName, this.caption});
+  final String date;
+  MemoryCard({this.locationImage, this.locationName, this.caption,this.date});
 
   @override
   MemoryCardState createState() {
@@ -108,100 +111,119 @@ class MemoryCardState extends State<MemoryCard> {
     return Padding(
       padding:
           EdgeInsets.only(bottom: MediaQuery.of(context).size.width * 0.05),
-      child: Container(
-        width: double.infinity,
-        height: isSelected
-            ? MediaQuery.of(context).size.width * 0.85
-            : MediaQuery.of(context).size.width * 0.5,
-        decoration: ShapeDecoration(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20.0),
+      child: InkResponse(
+        onLongPress: (){
+          if (!isSelected) {
+            setState(() {
+              isSelected = true;
+            });
+          } else
+            setState(() {
+              isSelected = false;
+            });
+        },
+        child: Container(
+          width: double.infinity,
+          height: isSelected
+              ? MediaQuery.of(context).size.width * 0.85
+              : MediaQuery.of(context).size.width * 0.5,
+          decoration: ShapeDecoration(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            image: DecorationImage(
+                image: NetworkImage(widget.locationImage),
+                fit: BoxFit.cover,
+                colorFilter:
+                    ColorFilter.mode(Colors.grey.shade400, BlendMode.multiply)),
           ),
-          image: DecorationImage(
-              image: NetworkImage(widget.locationImage),
-              fit: BoxFit.cover,
-              colorFilter:
-                  ColorFilter.mode(Colors.grey.shade400, BlendMode.multiply)),
-        ),
-        child: Stack(
-          children: <Widget>[
-            Positioned(
-              top: 20.0,
-              right: 20.0,
-              child: RawMaterialButton(
-                shape: CircleBorder(),
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Icon(
-                    !isSelected ? Icons.expand_more : Icons.expand_less,
-                    color: Colors.white,
-                    size: 32.0,
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                top: 15.0,
+                right: 15.0,
+                child: RawMaterialButton(
+                  shape: CircleBorder(),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Icon(
+                      !isSelected ? CupertinoIcons.down_arrow : CupertinoIcons.up_arrow,
+                      color: Colors.white,
+                      size: 32.0,
+                    ),
                   ),
+                  onPressed: () {
+                    if (!isSelected) {
+                      setState(() {
+                        isSelected = true;
+                      });
+                    } else
+                      setState(() {
+                        isSelected = false;
+                      });
+                  },
                 ),
-                onPressed: () {
-                  if (!isSelected) {
-                    setState(() {
-                      isSelected = true;
-                    });
-                  } else
-                    setState(() {
-                      isSelected = false;
-                    });
-                },
               ),
-            ),
-            isSelected
-                ? Align(
-                    alignment: Alignment.topCenter,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.width * 0.1),
-                      child: Text(
-                        "\”",
-                        style: TextStyle(
-                            fontFamily: "Playfair",
-                            fontSize: 120.0,
-                            color: Colors.white),
-                        textAlign: TextAlign.center,
-                        maxLines: 1,
-                      ),
-                    ),
-                  )
-                : Container(),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                widget.locationName,
-                style: TextStyle(
-                    fontFamily: "Playfair",
-                    fontSize: isSelected ? 70.0 : 60.0,
-                    color: Colors.white),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              Positioned(
+                bottom: 20.0,
+                left: 30.0,
+                child: Text(widget.date,
+                style: TextStyle(fontFamily: "Quicksand",
+                fontSize: 22.0,color: Colors.white,fontWeight: FontWeight.w500),),
               ),
-            ),
-            isSelected
-                ? Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          top: MediaQuery.of(context).size.width * 0.5,
-                          left: MediaQuery.of(context).size.width * 0.12,
-                          right: 12.0),
-                      child: Text(
-                        widget.caption,
-                        textAlign: TextAlign.right,
-                        maxLines: 2,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: "Quicksand",
-                            fontWeight: FontWeight.w500,
-                            fontSize: 20.0),
+              isSelected
+                  ? Align(
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.width * 0.1),
+                        child: Text(
+                          "\”",
+                          style: TextStyle(
+                              fontFamily: "Playfair",
+                              fontSize: 120.0,
+                              color: Colors.white),
+                          textAlign: TextAlign.center,
+                          maxLines: 1,
+                        ),
                       ),
-                    ),
-                  )
-                : Container()
-          ],
+                    )
+                  : Container(),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  widget.locationName,
+                  style: TextStyle(
+                      fontFamily: "Playfair",
+                      fontSize: isSelected ? 70.0 : 60.0,
+                      color: Colors.white),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              isSelected
+                  ? Align(
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: MediaQuery.of(context).size.width * 0.5,
+                            left: MediaQuery.of(context).size.width * 0.12,
+                            right: 12.0),
+                        child: Text(
+                          widget.caption,
+                          textAlign: TextAlign.right,
+                          maxLines: 2,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: "Quicksand",
+                              fontWeight: FontWeight.w500,
+                              fontSize: 20.0),
+                        ),
+                      ),
+                    )
+                  : Container()
+            ],
+          ),
         ),
       ),
     );
