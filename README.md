@@ -1,4 +1,4 @@
-# beige
+# Beige
 
 Travel Memories oragnizer application
 
