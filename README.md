@@ -1,6 +1,6 @@
 # Beige
 
-Travel Memories oragnizer application 
+Travel Memories oragnizer application <br>
 design by <a href="https://dribbble.com/elineye">Eline Te</a>
 
 ## Getting Started
